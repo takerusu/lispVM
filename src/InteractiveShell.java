@@ -28,8 +28,8 @@ public class InteractiveShell {
 			pa.parse(cell, 0);
 			int functionNum = function.size();
 			int pc = codeList.size();
-			Compiler cp = new Compiler();
-			cp.compile(cell, codeList, variable, function, functionLabel,
+			CodeGenerater cp = new CodeGenerater();
+			cp.generate(cell, codeList, variable, function, functionLabel,
 					functionVariable, 0);
 			if (functionNum != function.size()) {
 				System.out.println("defun");

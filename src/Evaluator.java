@@ -113,10 +113,6 @@ public class Evaluator {
 					intStack[sp++] = 0;
 				}
 				break;
-			case STOREA:
-				num = codeList.get(++pc).value;
-
-				break;
 			case LOADA:
 				num = codeList.get(++pc).value;
 				if (num > intStack[fp - 2]) {

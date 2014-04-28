@@ -54,8 +54,8 @@ public class Main {
 				for (int i = 0; i < list.size(); i++) {
 					functionNum = function.size();
 					pc = codeList.size();
-					Compiler cp = new Compiler();
-					cp.compile(list.get(i), codeList, variable, function,
+					CodeGenerater cp = new CodeGenerater();
+					cp.generate(list.get(i), codeList, variable, function,
 							functionLabel, functionVariable, 0);
 					if (functionNum == function.size()) {
 						pcList[index++] = pc;

@@ -1,17 +1,17 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Compiler {
+public class CodeGenerater {
 	ConsCell cell;
 	ArrayList<Code> codeList;
 	int functionNum;
 	boolean defunFlug = false;
 
-	public Compiler() {
+	public CodeGenerater() {
 		functionNum = 0;
 	}
 
-	public void compile(
+	public void generate(
 			ConsCell cell,
 			ArrayList<Code> codeList,
 			HashMap<String, Integer> variable,
@@ -23,12 +23,12 @@ public class Compiler {
 		firstCell = cell;
 		while (!cell.value.equals("Nil")) {
 			if (cell.value.equals("car")) {
-				compile(cell.car, codeList, variable, function, functionLabel,
+				generate(cell.car, codeList, variable, function, functionLabel,
 						functionVariables, functionNum);
 			} else if (cell.value.equals("if")) {
 				cell = cell.cdr;
 				if (cell.value.equals("car")) {
-					compile(cell.car, codeList, variable, function,
+					generate(cell.car, codeList, variable, function,
 							functionLabel, functionVariables, functionNum);
 				} else if (cell.value.equals("1") || cell.value.equals("0")) {
 					codeList.add(new Code(Func.PUSH));
@@ -41,7 +41,7 @@ public class Compiler {
 				int label = codeList.size() - 1;
 				cell = cell.cdr;
 				if (cell.value.equals("car")) {
-					compile(cell.car, codeList, variable, function,
+					generate(cell.car, codeList, variable, function,
 							functionLabel, functionVariables, label);
 				} else {
 					if (Character.isDigit(cell.value.charAt(0))) {
@@ -61,7 +61,7 @@ public class Compiler {
 				label = codeList.size() - 1;
 				cell = cell.cdr;
 				if (cell.value.equals("car")) {
-					compile(cell.car, codeList, variable, function,
+					generate(cell.car, codeList, variable, function,
 							functionLabel, functionVariables, label);
 				} else {
 					codeList.add(new Code(Func.PUSH));
@@ -73,7 +73,7 @@ public class Compiler {
 			} else if (cell.value.equals("setq")) {
 				cell = cell.cdr;
 				if (cell.cdr.equals("car")) {
-					compile(cell.cdr.car, codeList, variable, function,
+					generate(cell.cdr.car, codeList, variable, function,
 							functionLabel, functionVariables, functionNum);
 				}
 				variable.put(cell.value, Integer.valueOf(cell.cdr.value));
@@ -93,7 +93,7 @@ public class Compiler {
 				functionVariables.add(functionVariable);
 				cell = tmpCell.cdr.cdr;
 				if (cell.value.equals("car")) {
-					compile(cell.car, codeList, variable, function,
+					generate(cell.car, codeList, variable, function,
 							functionLabel, functionVariables, function.size());
 				} else {
 					if (functionVariables.get(functionNum - 1).containsKey(
@@ -115,7 +115,7 @@ public class Compiler {
 				cell = cell.cdr;
 				for (int i = 0; i < functionVariable.size(); i++) {
 					if (cell.value.equals("car")) {
-						compile(cell.car, codeList, variable, function,
+						generate(cell.car, codeList, variable, function,
 								functionLabel, functionVariables,
 								function.size());
 					} else {
