@@ -1,0 +1,5 @@
+public enum Func {
+	RET, POP, PUSH, ADD, SUB, MUL, DIV, EQ, NEQ, GT, GTEQ, LT, LTEQ, BEQ0, CALL, PRINTLN, //
+	STOREA, STOREL, LOADA, LOADL,
+
+}
