@@ -193,7 +193,6 @@ public class CodeGenerater {
 		try {
 			cell = cell.cdr;
 			if (cell.value.equals("car")) {
-				cell = cell.cdr;
 			} else if (functionNum > 0) {
 				if (functionVariables.get(functionNum - 1).containsKey(
 						cell.value)) {
@@ -211,7 +210,6 @@ public class CodeGenerater {
 			cell = cell.cdr;
 			while (!cell.value.equals("Nil")) {
 				if (cell.value.equals("car")) {
-					cell = cell.cdr;
 					codeList.add(new Code(func));
 				} else if (functionNum > 0) {
 					if (functionVariables.get(functionNum - 1).containsKey(
@@ -230,8 +228,7 @@ public class CodeGenerater {
 					codeList.add(new Code(Integer.valueOf(cell.value)));
 					codeList.add(new Code(func));
 				}
-				if (!cell.value.equals("Nil"))
-					cell = cell.cdr;
+				cell = cell.cdr;
 			}
 		} catch (Exception e) {
 			codeList.add(new Code(func));
