@@ -192,17 +192,28 @@ public class CodeGenerater {
 			int functionNum) {
 		try {
 			cell = cell.cdr;
-			if (functionVariables.get(functionNum - 1).containsKey(cell.value)) {
-				codeList.add(new Code(Func.LOADA));
-				codeList.add(new Code(functionVariables.get(functionNum - 1)
-						.get(cell.value)));
+			if (cell.value.equals("car")) {
+				cell = cell.cdr;
+			} else if (functionNum > 0) {
+				if (functionVariables.get(functionNum - 1).containsKey(
+						cell.value)) {
+					codeList.add(new Code(Func.LOADA));
+					codeList.add(new Code(functionVariables
+							.get(functionNum - 1).get(cell.value)));
+				} else {
+					codeList.add(new Code(Func.PUSH));
+					codeList.add(new Code(Integer.valueOf(cell.value)));
+				}
 			} else {
 				codeList.add(new Code(Func.PUSH));
 				codeList.add(new Code(Integer.valueOf(cell.value)));
 			}
 			cell = cell.cdr;
 			while (!cell.value.equals("Nil")) {
-				if (functionNum != 0) {
+				if (cell.value.equals("car")) {
+					cell = cell.cdr;
+					codeList.add(new Code(func));
+				} else if (functionNum > 0) {
 					if (functionVariables.get(functionNum - 1).containsKey(
 							cell.value)) {
 						codeList.add(new Code(Func.LOADA));
@@ -219,11 +230,11 @@ public class CodeGenerater {
 					codeList.add(new Code(Integer.valueOf(cell.value)));
 					codeList.add(new Code(func));
 				}
-				cell = cell.cdr;
+				if (!cell.value.equals("Nil"))
+					cell = cell.cdr;
 			}
 		} catch (Exception e) {
 			codeList.add(new Code(func));
 		}
 	}
-
 }
