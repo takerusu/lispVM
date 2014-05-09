@@ -22,25 +22,33 @@ public class Tokenizer {
 
 			while (index < lispCode.length()) {
 				int letter = 0;
-				int pflag = 0;
-				while (lispCode.charAt(index) != ' ') {
+				while (lispCode.charAt(index) != ' '
+						&& lispCode.charAt(index) != '('
+						&& lispCode.charAt(index) != ')') {
 					letter++;
 					index++;
 					if (index >= lispCode.length())
 						break;
-					if (lispCode.charAt(index - 1) == '(') {
-						pflag++;
-						break;
+				}
+				if (letter != 0) {
+					if (lispCode.charAt(index) == '(') {
+						codeList.add(lispCode.substring(index - letter, index));
+						codeList.add("(");
+					} else if (lispCode.charAt(index) == ')') {
+						codeList.add(lispCode.substring(index - letter, index));
+						codeList.add(")");
+					} else {
+						codeList.add(lispCode.substring(index - letter, index));
+					}
+				} else {
+					if (lispCode.charAt(index) == '(') {
+						codeList.add("(");
 					}
 					if (lispCode.charAt(index) == ')') {
-						pflag++;
-						break;
+						codeList.add(")");
 					}
 				}
-				if (letter != 0)
-					codeList.add(lispCode.substring(index - letter, index));
-				if (pflag == 0)
-					index++;
+				index++;
 			}
 			codeList.add("EOF");
 		}
